@@ -64,7 +64,7 @@
         <!-- test toggling -->
         <skipTests>false</skipTests>
         <skipCodeCoverage>true</skipCodeCoverage>
-        <skipCheckStyle>false</skipCheckStyle>
+        <skipCheckStyle>true</skipCheckStyle>
 
         <!-- By default exclude Integration/End-to-End tests -->
         <excludeTests>IntegrationTest</excludeTests>
@@ -164,6 +164,21 @@
 
     <build>
         <plugins>
+            <!-- jar with dependencies package-->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>fully.qualified.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+
             <!-- Set Source & Target JRE Version -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
