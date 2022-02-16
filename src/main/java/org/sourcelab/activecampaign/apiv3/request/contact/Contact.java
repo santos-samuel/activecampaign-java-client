@@ -56,7 +56,7 @@ public class Contact {
         @JsonProperty("firstName") final String firstName,
         @JsonProperty("lastName") final String lastName,
         @JsonProperty("phone") final String phone,
-        final List<FieldValue> fieldValues,
+        @JsonProperty("fieldValues") final List<FieldValue> fieldValues,
         @JsonProperty("links") final Map<String, String> links
     ) {
         this.id = id;

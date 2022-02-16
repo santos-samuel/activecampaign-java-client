@@ -22,37 +22,43 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.sourcelab.activecampaign.apiv3.request.contact.Contact;
 import org.sourcelab.activecampaign.apiv3.request.contact.ContactBuilder;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents the API response from creating a Contact.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ContactCreateResponse {
-    private final Contact contact;
+public class ContactListSearchFilterResponse {
+
+    private final List<Object> scoreValues;
+    private final List<Contact> contacts;
+    private final Map<String, Object> metaValues;
 
     /**
      * Constructor.
      */
     @JsonCreator
-    public ContactCreateResponse(
-        @JsonProperty("fieldValues") final List<Contact.FieldValue> fieldValues,
-        @JsonProperty("contact") final Map<String, Object> contactValues
+    public ContactListSearchFilterResponse(
+            @JsonProperty("scoreValues") final List<Object> scoreValues,
+            @JsonProperty("contacts") final List<Map<String, Object>> contacts,
+            @JsonProperty("meta") final Map<String, Object> metaValues
     ) {
-        this.contact = Utils.buildContactObject(contactValues, fieldValues);
+        this.scoreValues = scoreValues;
+        this.contacts = contacts.stream().map(contact -> Utils.buildContactObject(contact, null)).collect(Collectors.toList());
+        this.metaValues = metaValues;
     }
 
-    public Contact getContact() {
-        return contact;
+    public List<Object> getScoreValues() {
+        return scoreValues;
     }
 
-    @Override
-    public String toString() {
-        return "ContactCreateResponse{"
-            + ", contact=" + contact
-            + '}';
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public Map<String, Object> getMetaValues() {
+        return metaValues;
     }
 }

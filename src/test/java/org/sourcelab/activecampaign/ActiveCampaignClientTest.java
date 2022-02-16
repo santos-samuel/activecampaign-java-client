@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.sourcelab.activecampaign.apiv3.ActiveCampaignClient;
 import org.sourcelab.activecampaign.apiv3.ApiConfig;
 import org.sourcelab.activecampaign.apiv3.request.contact.Contact;
+import org.sourcelab.activecampaign.apiv3.request.contact.ContactListSearchFilterRequest;
 import org.sourcelab.activecampaign.apiv3.request.contact.ContactRetrieveRequest;
 import org.sourcelab.activecampaign.apiv3.request.contactList.ContactListSubscribeRequest;
 import org.sourcelab.activecampaign.apiv3.request.contactTag.ContactTag;
@@ -33,6 +34,7 @@ import org.sourcelab.activecampaign.apiv3.response.account.Account;
 import org.sourcelab.activecampaign.apiv3.response.account.AccountListResponse;
 import org.sourcelab.activecampaign.apiv3.response.account.AccountResponse;
 import org.sourcelab.activecampaign.apiv3.response.contact.ContactCreateResponse;
+import org.sourcelab.activecampaign.apiv3.response.contact.ContactListSearchFilterResponse;
 import org.sourcelab.activecampaign.apiv3.response.contact.ContactRetrieveResponse;
 import org.sourcelab.activecampaign.apiv3.response.contactTag.ContactTagCreateResponse;
 import org.sourcelab.activecampaign.apiv3.response.contactTag.ContactTagDeleteResponse;
@@ -44,6 +46,8 @@ import org.sourcelab.activecampaign.apiv3.response.user.UsersMeResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -311,5 +315,13 @@ class ActiveCampaignClientTest {
     void testContactList() {
         final String resp = apiV3Client.contactList(new ContactListSubscribeRequest(1, 2, true));
         logger.info("Resop: {}", resp);
+    }
+
+    @Test
+    void testContactListSearchFilter() {
+        Map<String, String> params = new HashMap<>();
+//        params.put("email", "example@example.com");
+        ContactListSearchFilterResponse listResponse = apiV3Client.contactListSearchFilter(new ContactListSearchFilterRequest(params));
+        logger.info("Resop: {}", listResponse);
     }
 }
